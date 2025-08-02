@@ -233,7 +233,7 @@
         .clicker-button {
             width: var(--button-width);
             height: var(--button-height);
-            background-color: #ff0000;
+            background-color: transparent;
             border: none;
             border-radius: min(20px, 4vw);
             cursor: pointer;
@@ -243,48 +243,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 min(30px, 6vw) rgba(255, 0, 0, 0.6);
             transition: all 0.2s ease;
             position: relative;
             overflow: hidden;
             touch-action: manipulation;
             margin: min(20px, 4vw) 0;
+            background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="135.56012" height="135.56012" viewBox="0,0,135.56012,135.56012"><defs><linearGradient x1="114.46994" y1="240" x2="245.53006" y2="240" gradientUnits="userSpaceOnUse" id="color-1"><stop offset="0" stop-color="%23000101"/><stop offset="1" stop-color="%23001017"/></linearGradient><linearGradient x1="114.46994" y1="240" x2="245.53006" y2="240" gradientUnits="userSpaceOnUse" id="color-2"><stop offset="0" stop-color="%23009cff"/><stop offset="1" stop-color="%23000000"/></linearGradient></defs><g transform="translate(-112.21994,-172.21994)"><g stroke-miterlimit="10"><path d="M114.46994,240c0,-36.19126 29.33881,-65.53006 65.53006,-65.53006c36.19126,0 65.53006,29.33881 65.53006,65.53006c0,36.19126 -29.33881,65.53006 -65.53006,65.53006c-36.19126,0 -65.53006,-29.33881 -65.53006,-65.53006z" fill="url(%23color-1)" stroke="url(%23color-2)" stroke-width="4.5" stroke-linecap="butt"/><path d="M166.68982,244.73c10.41397,-0.75382 14.8263,-0.48063 20.6415,-0.48063c9.22158,0 23.29641,5.40614 30.77873,8.53552c0.83833,0.35062 0.78274,2.27175 1.18259,3.4143c0.50557,1.44463 1.30032,2.22977 0.68171,3.51381c-0.32479,0.67416 -4.48286,-0.69885 -5.09501,-0.1601c-1.00549,0.88494 3.60408,4.96683 3.18374,6.37874c-0.3228,1.08431 -5.56696,-0.50881 -6.70654,0.37468c-1.19371,0.92547 1.4622,5.72845 -0.12367,6.56789c-0.99428,0.5263 -7.54706,-4.40201 -11.56329,-2.63895c-3.46504,1.5211 -4.38601,9.61602 -5.99187,11.6179c-2.58345,3.22055 -4.78077,5.74428 -8.08815,6.33036c-0.65706,0.11643 -5.22618,0.66443 -5.58952,0.66443c-1.37939,0 -3.88226,0.52132 -6.39156,-0.77439c-1.64411,-0.84895 -3.43045,-3.10555 -4.41857,-4.60948c-2.81019,-4.27717 9.8535,-18.14556 6.64085,-20.37633c-11.73055,-8.14534 -35.90834,-2.34334 -35.90834,-7.16943c0,-4.33157 11.68221,-10.09637 26.7674,-11.18831z" fill="%23adadad" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M220.20016,255.91831c0,4.82609 -24.1778,-0.97591 -35.90834,7.16943c-3.21265,2.23077 9.45104,16.09916 6.64085,20.37633c-0.98811,1.50393 -2.77445,3.76053 -4.41857,4.60948c-2.5093,1.2957 -5.01217,0.77439 -6.39156,0.77439c-0.36334,0 -4.93246,-0.548 -5.58952,-0.66443c-3.30739,-0.58608 -5.50471,-3.10981 -8.08815,-6.33036c-1.60586,-2.00188 -2.52683,-10.0968 -5.99187,-11.6179c-4.01622,-1.76306 -10.569,3.16525 -11.56329,2.63895c-1.58587,-0.83944 1.07004,-5.64242 -0.12367,-6.56789c-1.13958,-0.88349 -6.38374,0.70962 -6.70654,-0.37468c-0.42033,-1.41191 4.18923,-5.4938 3.18374,-6.37874c-0.61215,-0.53876 -4.77022,0.83426 -5.09501,0.1601c-0.61862,-1.28404 0.17613,-2.06918 0.6817,-3.51381c0.39985,-1.14255 0.34426,-3.06368 1.18259,-3.4143c7.48233,-3.12938 21.55716,-8.53552 30.77873,-8.53552c5.81519,0 10.22752,-0.27319 20.6415,0.48063c15.08518,1.09194 26.7674,6.85674 26.7674,11.18831z" fill="%23adadad" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M135.26821,255.07516c0,0 10.36413,-30.16697 17.96774,-38.6195c3.00935,-3.34533 25.76907,-14.41331 25.76907,-14.41331l3.10699,6.99069l3.58498,34.23026l-19.59792,1.6874l-27.96288,9.88339l-1.43399,0.48212z" fill="%23e1dee4" stroke="%23000000" stroke-width="0" stroke-linecap="round"/><path d="M168.72807,228.57125c0,6.86377 -3.63812,12.42795 -8.12597,12.42795c-4.48785,0 -8.12597,-5.56418 -8.12597,-12.42795c0,-6.86377 3.63812,-12.42795 8.12597,-12.42795c4.48785,0 8.12597,5.56418 8.12597,12.42795z" fill="%23ff6457" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M186.89199,207.30034c0,8.9757 -3.1031,16.25193 -6.93097,16.25193c-3.82787,0 -6.93097,-7.27623 -6.93097,-16.25193c0,-8.9757 3.1031,-16.25193 6.93097,-16.25193c3.82787,0 6.93097,7.27624 6.93097,16.25193z" fill="%23ff6361" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M170.60837,199.33499c2.53053,-1.21327 6.8882,2.61334 9.73313,8.547c2.84492,5.93366 3.09979,11.7274 0.56926,12.94067c-2.53053,1.21327 -6.8882,-2.61334 -9.73313,-8.547c-2.84492,-5.93366 -3.09979,-11.7274 -0.56926,-12.94067z" fill="%23ff6361" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M165.38208,229.28824c0,3.43188 -1.87256,6.21397 -4.18248,6.21397c-2.30992,0 -4.18248,-2.78209 -4.18248,-6.21397c0,-3.43188 1.87256,-6.21397 4.18248,-6.21397c2.30992,0 4.18248,2.78209 4.18248,6.21397z" fill="%23252f29" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M223.2978,255.24037l-1.43399,-0.48143l-27.96288,-9.86932l-19.59792,-1.685l3.58498,-34.18153l3.10699,-6.98074c0,0 22.75972,11.05222 25.76907,14.39278c7.60361,8.44049 17.96774,38.56451 17.96774,38.56451z" fill="%23e1dee4" stroke="%23000000" stroke-width="0" stroke-linecap="round"/><path d="M199.3979,216.1433c4.48785,0 8.12597,5.56418 8.12597,12.42795c0,6.86377 -3.63812,12.42795 -8.12597,12.42795c-4.48785,0 -8.12597,-5.56418 -8.12597,-12.42795c0,-6.86377 3.63812,-12.42795 8.12597,-12.42795z" fill="%23ff6457" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M180.03898,191.04841c3.82787,0 6.93097,7.27623 6.93097,16.25193c0,8.9757 -3.1031,16.25193 -6.93097,16.25193c-3.82787,0 -6.93097,-7.27623 -6.93097,-16.25193c0,-8.97569 3.1031,-16.25193 6.93097,-16.25193z" fill="%23ff6361" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M188.82237,212.27566c-2.84493,5.93366 -7.2026,9.76027 -9.73313,8.547c-2.53053,-1.21327 -2.27566,-7.00701 0.56926,-12.94067c2.84493,-5.93366 7.2026,-9.76027 9.73313,-8.547c2.53053,1.21327 2.27566,7.00701 -0.56926,12.94067z" fill="%23ff6361" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M198.8004,223.07427c2.30992,0 4.18248,2.78209 4.18248,6.21397c0,3.43188 -1.87256,6.21397 -4.18248,6.21397c-2.30992,0 -4.18248,-2.78209 -4.18248,-6.21397c0,-3.43188 1.87256,-6.21397 4.18248,-6.21397z" fill="%23252f29" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M163.23109,240.0432l15.77393,-9.08196l15.53493,9.55996l-15.05693,9.55996z" fill="%23fdbc01" stroke="%23000000" stroke-width="0" stroke-linecap="round"/><path d="M192.05068,241.18019c0,0 -8.12025,3.93107 -12.35478,3.93107c-4.15654,0 -12.82278,-3.93107 -12.82278,-3.93107" fill="none" stroke="%23e07700" stroke-width="1.5" stroke-linecap="round"/><path d="M180.4891,287.01513c0,1.00609 -7.47316,0.4373 -10.40405,-3.43792c-4.14628,-5.48219 -4.46303,-15.13464 -7.191,-15.13464c-4.65629,0 -6.59815,1.08531 -6.59815,-1.34407c0,-2.42937 3.77468,-4.39876 8.43097,-4.39876c2.26794,0 5.69943,0.67126 8.99901,6.27844c0.6583,1.11869 2.10193,3.793 5.11497,5.84893c2.03102,1.38585 5.7085,2.15739 6.80345,3.24484c2.37252,2.35629 -0.57399,2.88985 0.02354,4.73402c0.877,2.70668 -5.17874,3.70308 -5.17874,4.20916z" fill="%23e1e1e1" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M173.82847,282.68378c0.59753,-1.84417 -2.34898,-2.37773 0.02354,-4.73402c1.09494,-1.08746 4.77242,-1.85899 6.80345,-3.24484c3.01304,-2.05593 4.45667,-4.73024 5.11497,-5.84893c3.29958,-5.60718 6.73107,-6.27844 8.99901,-6.27844c4.65629,0 8.43096,1.96939 8.43096,4.39876c0,2.42937 -1.94185,1.34407 -6.59814,1.34407c-2.72797,0 -3.04473,9.65245 -7.191,15.13464c-2.93089,3.87522 -10.40405,4.44401 -10.40405,3.43792c0,-0.50608 -6.05574,-1.50248 -5.17874,-4.20916z" fill="%23e1e1e1" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M185.86536,273.1468c0,2.26066 -2.70792,4.09329 -6.0483,4.09329c-3.34038,0 -6.0483,-1.83263 -6.0483,-4.09329c0,-2.26066 2.70792,-4.09329 6.0483,-4.09329c3.34038,0 6.0483,1.83263 6.0483,4.09329z" fill="%232b2b2b" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M181.10004,278.24284c0,1.22862 -0.57441,2.22463 -1.28297,2.22463c-0.70857,0 -1.28297,-0.996 -1.28297,-2.22463c0,-1.22862 0.57441,-2.22463 1.28297,-2.22463c0.70857,0 1.28297,0.996 1.28297,2.22463z" fill="%232b2b2b" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M180.61128,279.07292c0,1.28217 -3.02895,3.54345 -5.55955,3.54345c-2.53059,0 -3.97111,-1.77253 -3.97111,-3.0547c0,-1.28217 1.68489,0.73313 4.21548,0.73313c2.53059,0 5.31517,-2.50405 5.31517,-1.22188z" fill="%232b2b2b" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M180.06143,269.05351c3.34038,0 6.0483,1.83263 6.0483,4.09329c0,2.26066 -2.70792,4.09329 -6.0483,4.09329c-3.34038,0 -6.0483,-1.83263 -6.0483,-4.09329c0,-2.26066 2.70792,-4.09329 6.0483,-4.09329z" fill="%232b2b2b" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M180.06142,276.01821c0.70856,0 1.28297,0.86017 1.28297,1.92123c0,1.06107 -0.5744,1.92123 -1.28297,1.92123c-0.70856,0 -1.28297,-0.86017 -1.28297,-1.92123c0,-1.06107 0.5744,-1.92123 1.28297,-1.92123z" fill="%232b2b2b" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M179.26722,279.07292c0,-1.28217 2.78458,1.22188 5.31517,1.22188c2.53059,0 4.21548,-2.0153 4.21548,-0.73313c0,1.28217 -1.44052,3.0547 -3.97111,3.0547c-2.5306,0 -5.55955,-2.26128 -5.55955,-3.54345z" fill="%232b2b2b" stroke="none" stroke-width="0" stroke-linecap="butt"/></g></g></svg>');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .clicker-button:hover {
-            background-color: #ff3333;
-            box-shadow: 0 0 min(40px, 8vw) rgba(255, 0, 0, 0.8);
             transform: scale(1.03);
         }
 
         .clicker-button:active {
             transform: scale(0.97);
-            box-shadow: 0 0 min(20px, 4vw) rgba(255, 0, 0, 1);
         }
 
         .clicker-button:disabled {
-            background-color: #555;
-            box-shadow: none;
+            opacity: 0.7;
             cursor: not-allowed;
             transform: none !important;
-        }
-
-        .clicker-button::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-            top: 0;
-            left: 0;
-            transform: scale(0);
-            border-radius: min(20px, 4vw);
-            transition: transform 0.4s ease;
-        }
-
-        .clicker-button:active::after {
-            transform: scale(1);
-            opacity: 0;
         }
 
         .click-effect {
@@ -333,93 +314,109 @@
             transition: width 0.5s;
         }
 
-        .shop-item {
+        /* Стили для карточек улучшений */
+        .compact-shop-item {
+            width: min(160px, 40vw);
             background-color: #252525;
-            border-radius: min(10px, 2vw);
-            padding: min(15px, 3vw);
-            margin-bottom: min(15px, 3vw);
-            width: 90%;
-            max-width: min(400px, 90vw);
+            border-radius: min(12px, 3vw);
+            padding: min(12px, 3vw);
+            margin-bottom: min(25px, 6vw);
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
             transition: transform 0.2s;
-            flex-wrap: wrap;
+            position: relative;
+            border: 1px solid #333;
         }
 
-        .shop-item:hover {
-            transform: translateY(min(-3px, -0.5vw));
-            background-color: #2e2e2e;
-        }
-
-        .shop-item.upgrade-item {
+        .compact-shop-item.upgrade-item {
             background-color: #1a2a3a;
             border: 1px solid #4a90e2;
         }
 
-        .shop-item.upgrade-item:hover {
+        .compact-shop-item.upgrade-item:hover {
             background-color: #1e3248;
         }
 
-        .shop-item.upgrade-item .shop-item-price {
-            color: #4a90e2;
+        .shop-item-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: min(10px, 2vw);
         }
 
-        .shop-item.upgrade-item .shop-item-button {
-            background-color: #4a90e2;
-        }
-
-        .shop-item.upgrade-item .shop-item-button:hover {
-            background-color: #5a9ef2;
-        }
-
-        .shop-item.premium-item {
-            background-color: #2a1a3a;
-            border: 1px solid #aa00ff;
-        }
-
-        .shop-item.premium-item:hover {
-            background-color: #331e48;
-        }
-
-        .shop-item.premium-item .shop-item-price {
-            color: #aa00ff;
-        }
-
-        .shop-item.premium-item .shop-item-button {
-            background-color: #aa00ff;
-        }
-
-        .shop-item.premium-item .shop-item-button:hover {
-            background-color: #bb11ff;
-        }
-
-        .shop-item-info {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-width: min(200px, 50vw);
-        }
-
-        .shop-item-name {
-            font-size: var(--stat-font-size);
+        .shop-item-title {
+            font-size: min(16px, 4vw);
             font-weight: bold;
-            margin-bottom: min(5px, 1vw);
+            color: white;
+            margin-bottom: min(2px, 0.5vw);
         }
 
-        .shop-item-desc {
-            font-size: min(14px, 3.5vw);
+        .shop-item-subtitle {
+            font-size: min(12px, 3vw);
             color: #aaa;
-            margin-bottom: min(5px, 1vw);
+        }
+
+        .shop-item-image {
+            width: min(100px, 25vw);
+            height: min(100px, 25vw);
+            border-radius: min(10px, 2vw);
+            background-size: cover;
+            background-position: center;
+            margin: min(5px, 1vw) 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profit-per-hour {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffcc00;
+            font-size: min(12px, 3vw);
+            text-align: center;
+            padding: min(5px, 1vw);
+            font-weight: bold;
+        }
+
+        .bonus-per-click {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #4a90e2;
+            font-size: min(12px, 3vw);
+            text-align: center;
+            padding: min(5px, 1vw);
+            font-weight: bold;
+        }
+
+        .shop-item-footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: min(8px, 2vw);
+            font-size: min(14px, 3.5vw);
+        }
+
+        .shop-item-level {
+            color: #aaa;
         }
 
         .shop-item-price {
-            font-size: min(16px, 4vw);
             color: #ffcc00;
+            font-weight: bold;
+        }
+
+        .upgrade-item .shop-item-price {
+            color: #4a90e2;
         }
 
         .shop-item-button {
-            padding: min(8px, 2vw) min(15px, 3vw);
+            width: 100%;
+            padding: min(8px, 2vw);
             background-color: #ff0000;
             border: none;
             border-radius: min(5px, 1vw);
@@ -428,29 +425,24 @@
             font-weight: bold;
             transition: background-color 0.3s;
             font-size: min(14px, 3.5vw);
-            white-space: nowrap;
-            margin-left: min(10px, 2vw);
-            margin-top: min(5px, 1vw);
+            margin-top: min(10px, 2vw);
+        }
+
+        .upgrade-item .shop-item-button {
+            background-color: #4a90e2;
         }
 
         .shop-item-button:hover {
             background-color: #ff3333;
         }
 
+        .upgrade-item .shop-item-button:hover {
+            background-color: #5a9ef2;
+        }
+
         .shop-item-button:disabled {
             background-color: #555;
             cursor: not-allowed;
-        }
-
-        .stars-icon {
-            width: min(20px, 5vw);
-            height: min(20px, 5vw);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23aa00ff"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 5px;
         }
 
         .reset-btn {
@@ -618,15 +610,6 @@
             .profit-widget {
                 margin: 0 auto;
             }
-            .shop-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .shop-item-button {
-                margin-left: 0;
-                margin-top: min(10px, 2vw);
-                width: 100%;
-            }
         }
     </style>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -657,7 +640,7 @@
         <div class="tab-content active" id="main-tab">
             <div class="clicker-container">
                 <div class="money-overlay" id="money-display-value">0</div>
-                <button class="clicker-button" id="clicker">+1</button>
+                <button class="clicker-button" id="clicker"> </button>
                 <div class="energy-info">
                     <div class="energy-text">Энергия: <span id="energy-value">5000</span>/5000</div>
                     <div class="energy-bar">
@@ -670,31 +653,34 @@
         </div>
 
         <div class="tab-content" id="shop-tab">
-            <div class="shop-item" id="click-booster">
-                <div class="shop-item-info">
-                    <div class="shop-item-name">Ускорение кликов</div>
-                    <div class="shop-item-desc">+50,000 кликов каждый час (уровень: <span id="booster-level">0</span>)</div>
-                    <div class="shop-item-price" id="click-booster-price">100,000 монет</div>
+            <div class="compact-shop-item" id="click-booster">
+                <div class="shop-item-header">
+                    <div class="shop-item-title">Ускорение кликов</div>
+                    <div class="shop-item-subtitle">Ваш надежный помощник</div>
                 </div>
-                <button class="shop-item-button" id="buy-click-booster">Купить (<span id="booster-price-value">100,000</span>)</button>
+                <div class="shop-item-image" style="background-image: url('https://i.postimg.cc/c1f3Js4N/freepik-a-hyperpunkstyle-chicken-with-a-cyberpunk-hologram-82847.png')">
+                    <div class="profit-per-hour">Прибыль в час <span id="booster-profit">865</span></div>
+                </div>
+                <div class="shop-item-footer">
+                    <div class="shop-item-level">Ур. <span id="booster-level">7</span></div>
+                    <div class="shop-item-price" id="click-booster-price">16,54K</div>
+                </div>
+                <button class="shop-item-button" id="buy-click-booster">Купить</button>
             </div>
 
-            <div class="shop-item upgrade-item" id="click-power">
-                <div class="shop-item-info">
-                    <div class="shop-item-name">Сила клика</div>
-                    <div class="shop-item-desc">+1 монета за клик (уровень: <span id="click-power-level">0</span>)</div>
-                    <div class="shop-item-price" id="click-power-price">10,000 монет</div>
+            <div class="compact-shop-item upgrade-item" id="click-power">
+                <div class="shop-item-header">
+                    <div class="shop-item-title">Сила клика</div>
+                    <div class="shop-item-subtitle">Мощные удары</div>
                 </div>
-                <button class="shop-item-button" id="buy-click-power">Купить (<span id="click-power-price-value">10,000</span>)</button>
-            </div>
-
-            <div class="shop-item premium-item" id="premium-boost">
-                <div class="shop-item-info">
-                    <div class="shop-item-name">Премиум-буст</div>
-                    <div class="shop-item-desc">+1 монета каждый час (постоянно)</div>
-                    <div class="shop-item-price" id="premium-boost-price"><span class="stars-icon"></span>10</div>
+                <div class="shop-item-image" style="background-image: url('https://i.postimg.cc/yYwKtMtp/generated-image-1.jpg')">
+                    <div class="bonus-per-click">+<span id="click-power-bonus">1</span> за клик</div>
                 </div>
-                <button class="shop-item-button" id="buy-premium-boost">Купить за <span class="stars-icon"></span><span id="premium-boost-price-value">10</span></button>
+                <div class="shop-item-footer">
+                    <div class="shop-item-level">Ур. <span id="click-power-level">0</span></div>
+                    <div class="shop-item-price" id="click-power-price">10,00K</div>
+                </div>
+                <button class="shop-item-button" id="buy-click-power">Купить</button>
             </div>
         </div>
 
@@ -730,9 +716,6 @@
         <div class="dev-menu-content" id="dev-menu-content">
             <div class="dev-option">
                 <button class="dev-option-btn" id="dev-add-coins">Добавить 1000 монет</button>
-            </div>
-            <div class="dev-option">
-                <button class="dev-option-btn" id="dev-add-premium">Добавить премиум</button>
             </div>
         </div>
     </div>
@@ -837,13 +820,11 @@
         const clickBoosterPriceElement = document.getElementById('click-booster-price');
         const buyClickBoosterButton = document.getElementById('buy-click-booster');
         const boosterLevelElement = document.getElementById('booster-level');
-        const boosterPriceValueElement = document.getElementById('booster-price-value');
+        const boosterProfitElement = document.getElementById('booster-profit');
         const clickPowerLevelElement = document.getElementById('click-power-level');
+        const clickPowerBonusElement = document.getElementById('click-power-bonus');
         const clickPowerPriceElement = document.getElementById('click-power-price');
         const buyClickPowerButton = document.getElementById('buy-click-power');
-        const clickPowerPriceValueElement = document.getElementById('click-power-price-value');
-        const buyPremiumBoostButton = document.getElementById('buy-premium-boost');
-        const devAddPremiumBtn = document.getElementById('dev-add-premium');
 
         // Элементы для промокодов
         const promoCodeInput = document.getElementById('promo-code-input');
@@ -864,10 +845,8 @@
         let lastPassiveUpdate = parseInt(localStorage.getItem('lastPassiveUpdate')) || Date.now();
         let clickBoosterLevel = parseInt(localStorage.getItem('clickBoosterLevel')) || 0;
         let clickPowerLevel = parseInt(localStorage.getItem('clickPowerLevel')) || 0;
-        let hasPremiumBoost = localStorage.getItem('hasPremiumBoost') === 'true' || false;
-        const clickBoosterBasePrice = 100000;
-        const clickPowerBasePrice = 10000;
-        const premiumBoostPrice = 10; // 10 звезд
+        let clickBoosterBasePrice = 100000;
+        let clickPowerBasePrice = 10000;
         let energyInterval;
         let canClick = true;
         let passiveInterval;
@@ -882,40 +861,7 @@
             startEnergyRecovery();
             updateClickBoosterPrice();
             updateClickPowerPrice();
-            updatePremiumBoostDisplay();
             startPassiveIncome();
-            
-            // Инициализация платежей Telegram
-            initTelegramPayments();
-        }
-
-        // Инициализация платежной системы Telegram
-        function initTelegramPayments() {
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.onEvent('invoiceClosed', (event) => {
-                    console.log('Invoice closed:', event);
-                    if (event.status === 'paid') {
-                        const payload = JSON.parse(event.payload);
-                        if (payload.type === 'premium_boost') {
-                            processPremiumPurchase();
-                        }
-                    }
-                });
-            }
-        }
-
-        // Обработка успешной покупки премиум-буста
-        function processPremiumPurchase() {
-            hasPremiumBoost = true;
-            localStorage.setItem('hasPremiumBoost', 'true');
-            updatePremiumBoostDisplay();
-            updateDisplays();
-            
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.showAlert('Премиум-буст успешно активирован!');
-            } else {
-                alert('Премиум-буст успешно активирован!');
-            }
         }
 
         // Функция для проверки и активации промокода
@@ -971,22 +917,18 @@
         function startPassiveIncome() {
             clearInterval(passiveInterval);
             passiveInterval = setInterval(() => {
-                let incomePerSecond = passiveClicks / 3600;
-                
-                // Добавляем бонус от премиум-буста
-                if (hasPremiumBoost) {
-                    incomePerSecond += 1 / 3600; // +1 монета в час
-                }
-                
-                accumulatedPassiveIncome += incomePerSecond;
-                
-                if (accumulatedPassiveIncome >= 1) {
-                    const coinsToAdd = Math.floor(accumulatedPassiveIncome);
-                    money += coinsToAdd;
-                    accumulatedPassiveIncome -= coinsToAdd;
-                    lastPassiveUpdate = Date.now();
-                    saveGame();
-                    updateDisplays();
+                if (passiveClicks > 0) {
+                    const incomePerSecond = passiveClicks / 3600;
+                    accumulatedPassiveIncome += incomePerSecond;
+                    
+                    if (accumulatedPassiveIncome >= 1) {
+                        const coinsToAdd = Math.floor(accumulatedPassiveIncome);
+                        money += coinsToAdd;
+                        accumulatedPassiveIncome -= coinsToAdd;
+                        lastPassiveUpdate = Date.now();
+                        saveGame();
+                        updateDisplays();
+                    }
                 }
             }, 1000);
         }
@@ -997,7 +939,9 @@
             clicksPerHourElement.textContent = passiveClicks.toLocaleString();
             profitPerHourElement.textContent = `${passiveClicks.toLocaleString()}/ч`;
             boosterLevelElement.textContent = clickBoosterLevel;
+            boosterProfitElement.textContent = passiveClicks.toLocaleString();
             clickPowerLevelElement.textContent = clickPowerLevel;
+            clickPowerBonusElement.textContent = clickPowerLevel;
             updateEnergyDisplay();
             updateClickBoosterPrice();
             updateClickPowerPrice();
@@ -1040,45 +984,33 @@
             clickerButton.disabled = energy <= 0;
         }
 
+        function formatPrice(price) {
+            if (price >= 1000000) {
+                return (price / 1000000).toFixed(2) + 'M';
+            } else if (price >= 1000) {
+                return (price / 1000).toFixed(2) + 'K';
+            }
+            return Math.floor(price).toLocaleString();
+        }
+
         function updateClickBoosterPrice() {
             const newPrice = clickBoosterBasePrice * Math.pow(1.5, clickBoosterLevel);
-            const newIncome = 50000 * Math.pow(1.2, clickBoosterLevel);
-            
-            clickBoosterPriceElement.textContent = `${Math.floor(newPrice).toLocaleString()} монет`;
-            boosterPriceValueElement.textContent = Math.floor(newPrice).toLocaleString();
+            clickBoosterPriceElement.textContent = formatPrice(newPrice);
             
             buyClickBoosterButton.disabled = money < newPrice;
             buyClickBoosterButton.textContent = money >= newPrice ? 
-                `Купить (${Math.floor(newPrice).toLocaleString()})` : 
-                `Не хватает (${Math.floor(newPrice).toLocaleString()})`;
+                `Купить` : 
+                `Не хватает`;
         }
 
         function updateClickPowerPrice() {
             const newPrice = clickPowerBasePrice * Math.pow(2, clickPowerLevel);
-            clickPowerPriceElement.textContent = `${Math.floor(newPrice).toLocaleString()} монет`;
-            clickPowerPriceValueElement.textContent = Math.floor(newPrice).toLocaleString();
+            clickPowerPriceElement.textContent = formatPrice(newPrice);
             
             buyClickPowerButton.disabled = money < newPrice;
             buyClickPowerButton.textContent = money >= newPrice ? 
-                `Купить (${Math.floor(newPrice).toLocaleString()})` : 
-                `Не хватает (${Math.floor(newPrice).toLocaleString()})`;
-        }
-
-        function updatePremiumBoostDisplay() {
-            const premiumBoostElement = document.getElementById('premium-boost');
-            const buyButton = document.getElementById('buy-premium-boost');
-            
-            if (hasPremiumBoost) {
-                premiumBoostElement.style.opacity = '0.7';
-                buyButton.innerHTML = 'Куплено';
-                buyButton.disabled = true;
-                buyButton.style.backgroundColor = '#555';
-            } else {
-                premiumBoostElement.style.opacity = '1';
-                buyButton.innerHTML = `Купить за <span class="stars-icon"></span><span>${premiumBoostPrice}</span>`;
-                buyButton.disabled = false;
-                buyButton.style.backgroundColor = '#aa00ff';
-            }
+                `Купить` : 
+                `Не хватает`;
         }
 
         function buyClickBooster() {
@@ -1103,44 +1035,6 @@
                 
                 saveGame();
                 updateDisplays();
-            }
-        }
-
-        function buyPremiumBoost() {
-            if (hasPremiumBoost) return;
-            
-            if (window.Telegram && Telegram.WebApp) {
-                const webApp = Telegram.WebApp;
-                
-                // В реальном приложении нужно использовать реальный provider_token
-                const testProviderToken = "381764678:TEST:55798"; // Только для тестов!
-                
-                webApp.openInvoice({
-                    title: 'Премиум-буст',
-                    description: 'Покупка постоянного бонуса +1 монета/час',
-                    currency: 'USD',
-                    prices: [
-                        { 
-                            label: '10 звезд', 
-                            amount: '1000' // 10.00 USD в центах
-                        }
-                    ],
-                    payload: JSON.stringify({ 
-                        type: 'premium_boost',
-                        user_id: webApp.initDataUnsafe?.user?.id || 'unknown'
-                    }),
-                    provider_token: testProviderToken
-                }, (status) => {
-                    console.log('Payment status:', status);
-                    if (status !== 'paid') {
-                        alert('Платеж не был завершен. Пожалуйста, попробуйте снова.');
-                    }
-                });
-            } else {
-                // Для тестирования вне Telegram
-                if (confirm(`Купить Премиум-буст за ${premiumBoostPrice} звезд? (тестовый режим)`)) {
-                    processPremiumPurchase();
-                }
             }
         }
 
@@ -1206,11 +1100,10 @@
             localStorage.setItem('lastPassiveUpdate', lastPassiveUpdate);
             localStorage.setItem('clickBoosterLevel', clickBoosterLevel);
             localStorage.setItem('clickPowerLevel', clickPowerLevel);
-            localStorage.setItem('hasPremiumBoost', hasPremiumBoost);
         }
 
         function resetGame() {
-            if (confirm('Вы уверены, что хотите сбросить весь прогресс?\nПремиум-буст останется активным.')) {
+            if (confirm('Вы уверены, что хотите сбросить весь прогресс?')) {
                 money = 0;
                 passiveClicks = 0;
                 energy = maxEnergy;
@@ -1234,18 +1127,6 @@
             updateDisplays();
         }
 
-        function addPremium() {
-            if (!hasPremiumBoost) {
-                hasPremiumBoost = true;
-                localStorage.setItem('hasPremiumBoost', 'true');
-                updatePremiumBoostDisplay();
-                updateDisplays();
-                alert('Премиум-буст активирован (тестовый режим)');
-            } else {
-                alert('Премиум-буст уже активирован');
-            }
-        }
-
         // Обработчики событий
         clickerButton.addEventListener('mousedown', function(e) {
             e.preventDefault();
@@ -1259,10 +1140,8 @@
 
         buyClickBoosterButton.addEventListener('click', buyClickBooster);
         buyClickPowerButton.addEventListener('click', buyClickPower);
-        buyPremiumBoostButton.addEventListener('click', buyPremiumBoost);
         resetButton.addEventListener('click', resetGame);
         activatePromoCodeButton.addEventListener('click', activatePromoCode);
-        devAddPremiumBtn.addEventListener('click', addPremium);
 
         navButtons.forEach(button => {
             button.addEventListener('click', () => {
