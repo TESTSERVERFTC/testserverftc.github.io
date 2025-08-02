@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кликер с улучшениями</title>
+    <title>Telegram Clicker Game</title>
     <style>
         body {
             background-color: #121212;
@@ -64,6 +64,11 @@
             margin-right: 10px;
             background-color: #333;
             background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
         }
 
         .profit-widget {
@@ -331,7 +336,6 @@
             text-align: center;
         }
 
-        /* Стили для меню разработчика */
         .dev-menu {
             position: fixed;
             bottom: 10px;
@@ -383,14 +387,27 @@
         .dev-option-btn:hover {
             background-color: #555;
         }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, 10px); }
+            20% { opacity: 1; transform: translate(-50%, 0); }
+            80% { opacity: 1; transform: translate(-50%, 0); }
+            100% { opacity: 0; transform: translate(-50%, -10px); }
+        }
     </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="header">
         <div class="stats">
             <div class="user-info" id="user-info">
                 <div class="user-avatar" id="user-avatar"></div>
-                <span id="telegram-username">Гость</span>
+                <span id="telegram-username">Загрузка...</span>
             </div>
             <div class="stat">
                 <div class="stat-value" id="money-counter">0</div>
@@ -440,7 +457,6 @@
         <button class="tab-button" data-tab="shop">Магазин</button>
     </div>
 
-    <!-- Меню разработчика -->
     <div class="dev-menu">
         <button class="dev-menu-btn" id="dev-menu-btn">Dev</button>
         <div class="dev-menu-content" id="dev-menu-content">
@@ -449,6 +465,9 @@
             </div>
             <div class="dev-option">
                 <button class="dev-option-btn" id="dev-reset-speed">Сбросить ускорение</button>
+            </div>
+            <div class="dev-option">
+                <button class="dev-option-btn" id="dev-add-coins">Добавить 1000 монет</button>
             </div>
         </div>
     </div>
@@ -460,48 +479,92 @@
             const usernameElement = document.getElementById('telegram-username');
             const avatarElement = document.getElementById('user-avatar');
             
-            // Проверяем, запущено ли приложение в Telegram
             if (window.Telegram && Telegram.WebApp) {
+                console.log('Telegram WebApp detected');
                 const webApp = Telegram.WebApp;
                 
-                // Расширяем приложение на весь экран
-                webApp.expand();
-                
-                // Получаем данные пользователя
-                const user = webApp.initDataUnsafe.user;
-                
-                if (user) {
-                    // Отображаем юзернейм или имя
-                    if (user.username) {
-                        usernameElement.textContent = `@${user.username}`;
-                    } else if (user.first_name) {
-                        usernameElement.textContent = user.first_name;
-                        if (user.last_name) {
-                            usernameElement.textContent += ` ${user.last_name}`;
+                try {
+                    webApp.expand();
+                    
+                    // Включаем кнопку назад
+                    webApp.BackButton.show();
+                    webApp.BackButton.onClick(() => {
+                        webApp.close();
+                    });
+                    
+                    // Получаем данные пользователя
+                    const user = webApp.initDataUnsafe?.user;
+                    console.log('Telegram user data:', user);
+                    
+                    if (user) {
+                        // Отображаем юзернейм или имя
+                        if (user.username) {
+                            usernameElement.textContent = `@${user.username}`;
+                        } else if (user.first_name) {
+                            let name = user.first_name;
+                            if (user.last_name) {
+                                name += ` ${user.last_name}`;
+                            }
+                            usernameElement.textContent = name;
+                        } else {
+                            usernameElement.textContent = "Пользователь";
                         }
+                        
+                        // Устанавливаем аватар
+                        if (user.photo_url) {
+                            avatarElement.style.backgroundImage = `url('${user.photo_url}')`;
+                        } else {
+                            setupDefaultAvatar(avatarElement, usernameElement.textContent);
+                        }
+                        
+                        // Сохраняем ID пользователя
+                        localStorage.setItem('telegram_user_id', user.id);
+                        
+                        userInfoElement.style.display = 'flex';
+                    } else {
+                        console.log('No user data available');
+                        setupTestUser();
                     }
                     
-                    // Устанавливаем аватар, если есть
-                    if (user.photo_url) {
-                        avatarElement.style.backgroundImage = `url('${user.photo_url}')`;
-                    }
+                    // Обработка изменения темы
+                    webApp.onEvent('themeChanged', () => {
+                        updateTheme(webApp);
+                    });
+                    updateTheme(webApp);
                     
-                    // Можно сохранить user.id для идентификации пользователя
-                    localStorage.setItem('telegram_user_id', user.id);
-                    
-                    // Показываем информацию о пользователе
-                    userInfoElement.style.display = 'flex';
-                } else {
-                    userInfoElement.style.display = 'none';
+                } catch (e) {
+                    console.error('Error initializing Telegram WebApp:', e);
+                    setupTestUser();
                 }
             } else {
-                // Режим тестирования вне Telegram
-                userInfoElement.style.display = 'flex';
-                usernameElement.textContent = "Гость";
+                console.log('Not in Telegram WebApp - using test mode');
+                setupTestUser();
             }
         }
+        
+        function setupDefaultAvatar(element, name) {
+            const colors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#33FFF3'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const letter = name.charAt(0).toUpperCase();
+            element.style.backgroundColor = color;
+            element.textContent = letter;
+        }
+        
+        function setupTestUser() {
+            const userInfoElement = document.getElementById('user-info');
+            const usernameElement = document.getElementById('telegram-username');
+            const avatarElement = document.getElementById('user-avatar');
+            
+            usernameElement.textContent = "Тестовый пользователь";
+            setupDefaultAvatar(avatarElement, "Т");
+            userInfoElement.style.display = 'flex';
+        }
+        
+        function updateTheme(webApp) {
+            document.body.style.backgroundColor = webApp.colorScheme === 'dark' ? '#121212' : '#f5f5f5';
+        }
 
-        // Элементы DOM
+        // Основная игровая логика
         const moneyElement = document.getElementById('money-counter');
         const moneyDisplayElement = document.getElementById('money-display-value');
         const clicksPerHourElement = document.getElementById('clicks-per-hour');
@@ -517,11 +580,12 @@
         const boosterLevelElement = document.getElementById('booster-level');
         const boosterPriceValueElement = document.getElementById('booster-price-value');
 
-        // Элементы меню разработчика
+        // Меню разработчика
         const devMenuBtn = document.getElementById('dev-menu-btn');
         const devMenuContent = document.getElementById('dev-menu-content');
         const devSpeedUpBtn = document.getElementById('dev-speed-up');
         const devResetSpeedBtn = document.getElementById('dev-reset-speed');
+        const devAddCoinsBtn = document.getElementById('dev-add-coins');
 
         // Состояние игры
         let money = parseInt(localStorage.getItem('money')) || 0;
@@ -535,7 +599,7 @@
         let energyInterval;
         let canClick = true;
         let passiveInterval;
-        let passiveIntervalTime = 3600000; // 1 час по умолчанию
+        let passiveIntervalTime = 3600000;
         let isDevModeActive = false;
 
         // Инициализация игры
@@ -548,7 +612,6 @@
             startPassiveIncome();
         }
 
-        // Применяем пропущенные пассивные клики
         function applyMissedPassiveClicks() {
             const now = Date.now();
             const timePassed = now - lastPassiveUpdate;
@@ -561,12 +624,32 @@
                 saveGame();
                 
                 if (moneyToAdd > 0) {
-                    alert(`Получено ${moneyToAdd} монет за ${intervalsPassed} периодов`);
+                    showPopup(`+${moneyToAdd} монет`, '#ffcc00');
                 }
             }
         }
 
-        // Запуск пассивного дохода
+        function showPopup(text, color) {
+            const popup = document.createElement('div');
+            popup.textContent = text;
+            popup.style.position = 'fixed';
+            popup.style.top = '20%';
+            popup.style.left = '50%';
+            popup.style.transform = 'translateX(-50%)';
+            popup.style.backgroundColor = 'rgba(0,0,0,0.7)';
+            popup.style.color = color || '#fff';
+            popup.style.padding = '10px 20px';
+            popup.style.borderRadius = '5px';
+            popup.style.zIndex = '1000';
+            popup.style.animation = 'fadeInOut 2s ease-in-out';
+            
+            document.body.appendChild(popup);
+            
+            setTimeout(() => {
+                popup.remove();
+            }, 2000);
+        }
+
         function startPassiveIncome() {
             clearInterval(passiveInterval);
             passiveInterval = setInterval(() => {
@@ -577,18 +660,17 @@
                         lastPassiveUpdate = now;
                         saveGame();
                         updateDisplays();
+                        showPopup(`+${passiveClicks} монет`, '#ffcc00');
                     }
                 }
-            }, 60000); // Проверяем каждую минуту
+            }, 60000);
         }
 
-        // Обновление всех отображений
         function updateDisplays() {
             moneyElement.textContent = money;
             moneyDisplayElement.textContent = money;
             clicksPerHourElement.textContent = passiveClicks;
             
-            // Обновляем отображение прибыли в зависимости от режима
             if (passiveIntervalTime === 10000) {
                 profitPerHourElement.textContent = `${passiveClicks}/10сек`;
             } else {
@@ -600,7 +682,6 @@
             updateClickBoosterPrice();
         }
 
-        // Обновление энергии
         function updateEnergy() {
             const now = Date.now();
             const timePassed = now - lastUpdateTime;
@@ -611,7 +692,6 @@
             saveGame();
         }
 
-        // Восстановление энергии
         function startEnergyRecovery() {
             clearInterval(energyInterval);
             energyInterval = setInterval(() => {
@@ -623,7 +703,6 @@
             }, 5000);
         }
 
-        // Обновление отображения энергии
         function updateEnergyDisplay() {
             energyValueElement.textContent = energy;
             const energyPercent = (energy / maxEnergy) * 100;
@@ -640,7 +719,6 @@
             clickerButton.disabled = energy <= 0;
         }
 
-        // Обновление цены улучшения
         function updateClickBoosterPrice() {
             const newPrice = clickBoosterBasePrice * (clickBoosterLevel + 1);
             clickBoosterPriceElement.textContent = `${newPrice} монет`;
@@ -650,7 +728,6 @@
             buyClickBoosterButton.textContent = money >= newPrice ? `Купить (${newPrice})` : `Не хватает (${newPrice})`;
         }
 
-        // Покупка улучшения
         function buyClickBooster() {
             const price = clickBoosterBasePrice * (clickBoosterLevel + 1);
             
@@ -662,19 +739,39 @@
                 saveGame();
                 updateDisplays();
                 
-                alert(`Улучшение куплено! Теперь вы получаете ${passiveClicks} кликов каждый ${passiveIntervalTime === 10000 ? '10 секунд' : 'час'}!`);
+                showPopup(`Улучшение куплено! +${passiveClicks}/ч`, '#00ff00');
             } else {
-                alert("Недостаточно монет для покупки!");
+                showPopup('Недостаточно монет!', '#ff0000');
             }
         }
 
-        // Обработчик кликов
         function handleClick() {
             if (energy > 0 && canClick) {
                 canClick = false;
                 
                 money++;
                 energy--;
+                
+                // Эффект "+1"
+                const plusOne = document.createElement('div');
+                plusOne.textContent = '+1';
+                plusOne.style.position = 'absolute';
+                plusOne.style.color = '#ffcc00';
+                plusOne.style.fontWeight = 'bold';
+                plusOne.style.fontSize = '24px';
+                plusOne.style.animation = 'floatUp 1s ease-out';
+                plusOne.style.pointerEvents = 'none';
+                plusOne.style.userSelect = 'none';
+                
+                const rect = clickerButton.getBoundingClientRect();
+                plusOne.style.left = `${rect.left + rect.width / 2 - 10}px`;
+                plusOne.style.top = `${rect.top - 20}px`;
+                
+                document.body.appendChild(plusOne);
+                
+                setTimeout(() => {
+                    plusOne.remove();
+                }, 1000);
                 
                 updateDisplays();
                 saveGame();
@@ -685,7 +782,6 @@
             }
         }
 
-        // Сохранение игры
         function saveGame() {
             localStorage.setItem('money', money);
             localStorage.setItem('passiveClicks', passiveClicks);
@@ -695,7 +791,6 @@
             localStorage.setItem('clickBoosterLevel', clickBoosterLevel);
         }
 
-        // Сброс прогресса
         function resetGame() {
             if (confirm('Вы уверены, что хотите сбросить весь прогресс?')) {
                 money = 0;
@@ -704,7 +799,7 @@
                 clickBoosterLevel = 0;
                 lastUpdateTime = Date.now();
                 lastPassiveUpdate = Date.now();
-                passiveIntervalTime = 3600000; // Сброс интервала
+                passiveIntervalTime = 3600000;
                 isDevModeActive = false;
                 
                 saveGame();
@@ -713,31 +808,36 @@
             }
         }
 
-        // Ускорение пассивного дохода (10 секунд)
         function speedUpPassiveIncome() {
             if (!isDevModeActive) {
-                passiveIntervalTime = 10000; // 10 секунд
+                passiveIntervalTime = 10000;
                 isDevModeActive = true;
                 lastPassiveUpdate = Date.now();
                 startPassiveIncome();
                 updateDisplays();
-                alert('Режим разработчика: пассивный доход теперь начисляется каждые 10 секунд');
+                showPopup('Доход ускорен (10сек)', '#00ff00');
             } else {
-                alert('Режим разработчика уже активен');
+                showPopup('Ускорение уже активно', '#ff9900');
             }
         }
 
-        // Сброс ускорения пассивного дохода
         function resetPassiveIncomeSpeed() {
-            passiveIntervalTime = 3600000; // 1 час
+            passiveIntervalTime = 3600000;
             isDevModeActive = false;
             lastPassiveUpdate = Date.now();
             startPassiveIncome();
             updateDisplays();
-            alert('Режим разработчика отключен: пассивный доход теперь начисляется каждый час');
+            showPopup('Доход сброшен до 1ч', '#ff9900');
         }
 
-        // Назначение обработчиков событий
+        function addCoins() {
+            money += 1000;
+            saveGame();
+            updateDisplays();
+            showPopup('+1000 монет', '#00ff00');
+        }
+
+        // Обработчики событий
         clickerButton.addEventListener('mousedown', function(e) {
             e.preventDefault();
             handleClick();
@@ -751,7 +851,6 @@
         buyClickBoosterButton.addEventListener('click', buyClickBooster);
         resetButton.addEventListener('click', resetGame);
 
-        // Переключение вкладок
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const tabId = button.getAttribute('data-tab');
@@ -764,25 +863,23 @@
             });
         });
 
-        // Меню разработчика
         devMenuBtn.addEventListener('click', () => {
             devMenuContent.classList.toggle('show');
         });
 
         devSpeedUpBtn.addEventListener('click', speedUpPassiveIncome);
         devResetSpeedBtn.addEventListener('click', resetPassiveIncomeSpeed);
+        devAddCoinsBtn.addEventListener('click', addCoins);
 
-        // Закрытие меню разработчика при клике вне его
         document.addEventListener('click', (e) => {
             if (!devMenuBtn.contains(e.target) && !devMenuContent.contains(e.target)) {
                 devMenuContent.classList.remove('show');
             }
         });
 
-        // Сохранение при закрытии
         window.addEventListener('beforeunload', saveGame);
 
-        // Запуск игры
+        // Запуск приложения
         document.addEventListener('DOMContentLoaded', function() {
             initTelegram();
             initGame();
