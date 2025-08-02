@@ -30,6 +30,7 @@
         .stats {
             display: flex;
             gap: 20px;
+            align-items: center;
         }
 
         .stat {
@@ -46,6 +47,23 @@
         .stat-label {
             font-size: 12px;
             color: #aaa;
+        }
+
+        .user-info {
+            font-size: 16px;
+            color: #aaa;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-color: #333;
+            background-size: cover;
         }
 
         .profit-widget {
@@ -370,6 +388,10 @@
 <body>
     <div class="header">
         <div class="stats">
+            <div class="user-info" id="user-info">
+                <div class="user-avatar" id="user-avatar"></div>
+                <span id="telegram-username">Гость</span>
+            </div>
             <div class="stat">
                 <div class="stat-value" id="money-counter">0</div>
                 <div class="stat-label">Монеты</div>
@@ -432,6 +454,53 @@
     </div>
 
     <script>
+        // Инициализация Telegram WebApp
+        function initTelegram() {
+            const userInfoElement = document.getElementById('user-info');
+            const usernameElement = document.getElementById('telegram-username');
+            const avatarElement = document.getElementById('user-avatar');
+            
+            // Проверяем, запущено ли приложение в Telegram
+            if (window.Telegram && Telegram.WebApp) {
+                const webApp = Telegram.WebApp;
+                
+                // Расширяем приложение на весь экран
+                webApp.expand();
+                
+                // Получаем данные пользователя
+                const user = webApp.initDataUnsafe.user;
+                
+                if (user) {
+                    // Отображаем юзернейм или имя
+                    if (user.username) {
+                        usernameElement.textContent = `@${user.username}`;
+                    } else if (user.first_name) {
+                        usernameElement.textContent = user.first_name;
+                        if (user.last_name) {
+                            usernameElement.textContent += ` ${user.last_name}`;
+                        }
+                    }
+                    
+                    // Устанавливаем аватар, если есть
+                    if (user.photo_url) {
+                        avatarElement.style.backgroundImage = `url('${user.photo_url}')`;
+                    }
+                    
+                    // Можно сохранить user.id для идентификации пользователя
+                    localStorage.setItem('telegram_user_id', user.id);
+                    
+                    // Показываем информацию о пользователе
+                    userInfoElement.style.display = 'flex';
+                } else {
+                    userInfoElement.style.display = 'none';
+                }
+            } else {
+                // Режим тестирования вне Telegram
+                userInfoElement.style.display = 'flex';
+                usernameElement.textContent = "Гость";
+            }
+        }
+
         // Элементы DOM
         const moneyElement = document.getElementById('money-counter');
         const moneyDisplayElement = document.getElementById('money-display-value');
@@ -714,7 +783,10 @@
         window.addEventListener('beforeunload', saveGame);
 
         // Запуск игры
-        initGame();
+        document.addEventListener('DOMContentLoaded', function() {
+            initTelegram();
+            initGame();
+        });
     </script>
 </body>
 </html>
