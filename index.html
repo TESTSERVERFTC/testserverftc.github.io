@@ -731,6 +731,9 @@
             <div class="dev-option">
                 <button class="dev-option-btn" id="dev-add-coins">Добавить 1000 монет</button>
             </div>
+            <div class="dev-option">
+                <button class="dev-option-btn" id="dev-add-premium">Добавить премиум</button>
+            </div>
         </div>
     </div>
 
@@ -840,6 +843,7 @@
         const buyClickPowerButton = document.getElementById('buy-click-power');
         const clickPowerPriceValueElement = document.getElementById('click-power-price-value');
         const buyPremiumBoostButton = document.getElementById('buy-premium-boost');
+        const devAddPremiumBtn = document.getElementById('dev-add-premium');
 
         // Элементы для промокодов
         const promoCodeInput = document.getElementById('promo-code-input');
@@ -880,6 +884,38 @@
             updateClickPowerPrice();
             updatePremiumBoostDisplay();
             startPassiveIncome();
+            
+            // Инициализация платежей Telegram
+            initTelegramPayments();
+        }
+
+        // Инициализация платежной системы Telegram
+        function initTelegramPayments() {
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.onEvent('invoiceClosed', (event) => {
+                    console.log('Invoice closed:', event);
+                    if (event.status === 'paid') {
+                        const payload = JSON.parse(event.payload);
+                        if (payload.type === 'premium_boost') {
+                            processPremiumPurchase();
+                        }
+                    }
+                });
+            }
+        }
+
+        // Обработка успешной покупки премиум-буста
+        function processPremiumPurchase() {
+            hasPremiumBoost = true;
+            localStorage.setItem('hasPremiumBoost', 'true');
+            updatePremiumBoostDisplay();
+            updateDisplays();
+            
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.showAlert('Премиум-буст успешно активирован!');
+            } else {
+                alert('Премиум-буст успешно активирован!');
+            }
         }
 
         // Функция для проверки и активации промокода
@@ -1029,16 +1065,19 @@
         }
 
         function updatePremiumBoostDisplay() {
+            const premiumBoostElement = document.getElementById('premium-boost');
+            const buyButton = document.getElementById('buy-premium-boost');
+            
             if (hasPremiumBoost) {
-                buyPremiumBoostButton.textContent = 'Куплено';
-                buyPremiumBoostButton.disabled = true;
-                buyPremiumBoostButton.style.backgroundColor = '#555';
-                document.getElementById('premium-boost').style.opacity = '0.7';
+                premiumBoostElement.style.opacity = '0.7';
+                buyButton.innerHTML = 'Куплено';
+                buyButton.disabled = true;
+                buyButton.style.backgroundColor = '#555';
             } else {
-                buyPremiumBoostButton.textContent = `Купить за ${premiumBoostPrice}`;
-                buyPremiumBoostButton.disabled = false;
-                buyPremiumBoostButton.style.backgroundColor = '#aa00ff';
-                document.getElementById('premium-boost').style.opacity = '1';
+                premiumBoostElement.style.opacity = '1';
+                buyButton.innerHTML = `Купить за <span class="stars-icon"></span><span>${premiumBoostPrice}</span>`;
+                buyButton.disabled = false;
+                buyButton.style.backgroundColor = '#aa00ff';
             }
         }
 
@@ -1073,36 +1112,34 @@
             if (window.Telegram && Telegram.WebApp) {
                 const webApp = Telegram.WebApp;
                 
-                // Показываем диалог покупки звезд
+                // В реальном приложении нужно использовать реальный provider_token
+                const testProviderToken = "381764678:TEST:55798"; // Только для тестов!
+                
                 webApp.openInvoice({
                     title: 'Премиум-буст',
                     description: 'Покупка постоянного бонуса +1 монета/час',
                     currency: 'USD',
                     prices: [
-                        { label: 'Премиум-буст', amount: premiumBoostPrice * 100 } // 10 звезд = $0.10
+                        { 
+                            label: '10 звезд', 
+                            amount: '1000' // 10.00 USD в центах
+                        }
                     ],
-                    payload: JSON.stringify({ type: 'premium_boost' }),
-                    success: () => {
-                        // Покупка успешна
-                        hasPremiumBoost = true;
-                        localStorage.setItem('hasPremiumBoost', 'true');
-                        updatePremiumBoostDisplay();
-                        updateDisplays();
-                        alert('Премиум-буст успешно активирован!');
-                    },
-                    error: (error) => {
-                        console.error('Ошибка покупки:', error);
-                        alert('Не удалось завершить покупку. Пожалуйста, попробуйте позже.');
+                    payload: JSON.stringify({ 
+                        type: 'premium_boost',
+                        user_id: webApp.initDataUnsafe?.user?.id || 'unknown'
+                    }),
+                    provider_token: testProviderToken
+                }, (status) => {
+                    console.log('Payment status:', status);
+                    if (status !== 'paid') {
+                        alert('Платеж не был завершен. Пожалуйста, попробуйте снова.');
                     }
                 });
             } else {
                 // Для тестирования вне Telegram
-                if (confirm(`Купить Премиум-буст за ${premiumBoostPrice} звезд?`)) {
-                    hasPremiumBoost = true;
-                    localStorage.setItem('hasPremiumBoost', 'true');
-                    updatePremiumBoostDisplay();
-                    updateDisplays();
-                    alert('Премиум-буст успешно активирован!');
+                if (confirm(`Купить Премиум-буст за ${premiumBoostPrice} звезд? (тестовый режим)`)) {
+                    processPremiumPurchase();
                 }
             }
         }
@@ -1197,6 +1234,18 @@
             updateDisplays();
         }
 
+        function addPremium() {
+            if (!hasPremiumBoost) {
+                hasPremiumBoost = true;
+                localStorage.setItem('hasPremiumBoost', 'true');
+                updatePremiumBoostDisplay();
+                updateDisplays();
+                alert('Премиум-буст активирован (тестовый режим)');
+            } else {
+                alert('Премиум-буст уже активирован');
+            }
+        }
+
         // Обработчики событий
         clickerButton.addEventListener('mousedown', function(e) {
             e.preventDefault();
@@ -1213,6 +1262,7 @@
         buyPremiumBoostButton.addEventListener('click', buyPremiumBoost);
         resetButton.addEventListener('click', resetGame);
         activatePromoCodeButton.addEventListener('click', activatePromoCode);
+        devAddPremiumBtn.addEventListener('click', addPremium);
 
         navButtons.forEach(button => {
             button.addEventListener('click', () => {
